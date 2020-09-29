@@ -4,6 +4,13 @@ This project provides a Dockerfile to automate the building process of the **ESP
 
 Only the version 3.1.5 of Pycopy have been tested so far, but it may work for other versions.
 
+Versions tested so far (let me know to update this list!):
+
+| Branch | Version | Works    | Comments                             |
+|--------|---------|:--------:|--------------------------------------|
+| Pycopy | 3.1.5   | &#10003; |                                      |
+| Pycopy | 3.3.0   | &#65794; | `make` throws warnings and fails.    |
+
 ## Building the firmware
 
 Download the repository and build the Docker image:
@@ -32,11 +39,12 @@ $ docker build -t pycopy-builder --build-arg DOUBLE_PRECISION_FLOATS=true .
 
 There are a few arguments you can use to tweak your build.
 
-| **Argument name**       | **Default value**                 | **Description**                             |
-|-------------------------|-----------------------------------|---------------------------------------------|
-| REPO                    | https://github.com/pfalcon/pycopy | MicroPython repository to be built.         |
-| BRANCH                  | v3.1.5                            | Branch name of the repository.              |
-| DOUBLE_PRECISION_FLOATS | false                             | If `true`, enables double precision floats. |
+| **Argument name**       | **Default value**                 | **Description**                                |
+|-------------------------|-----------------------------------|------------------------------------------------|
+| REPO                    | https://github.com/pfalcon/pycopy | MicroPython repository to be built.            |
+| BRANCH                  | v3.1.5                            | Branch name of the repository.                 |
+| DOUBLE_PRECISION_FLOATS | false                             | If `true`, enables double precision floats.    |
+| MODULES_PATH            |                                   | Module file or modules directory to be frozen. |
 
 Example:
 
@@ -44,7 +52,8 @@ Example:
 $ docker build -t pycopy-builder \
     --build-arg REPO=https://github.com/pfalcon/pycopy \
     --build-arg BRANCH=v3.1.5 \
-    --build-arg DOUBLE_PRECISION_FLOATS=true .
+    --build-arg DOUBLE_PRECISION_FLOATS=true \
+    --build-arg MODULES_PATH=your_modules_folder .
 ```
 
 ## References
