@@ -93,8 +93,6 @@ RUN export ESPIDF_SUPHASH_V3=$(cat ${WORK_DIR}/espdif_suphash_v3) && \
     rm -rf mbedtls && \
     git clone -b mbedtls-2.16.5-idf-pycopy https://github.com/pfalcon/mbedtls/
 
-    # (cd esp-idf/components/mbedtls/mbedtls; git log -n1)
-
 # COMPILE FIRMWARE
 
 WORKDIR ${WORK_DIR}/micropython/ports/esp32
