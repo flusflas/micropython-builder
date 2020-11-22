@@ -51,7 +51,7 @@ RUN git clone ${REPO} micropython
 
 WORKDIR ${WORK_DIR}/micropython
 
-ARG BRANCH=v3.3.0
+ARG BRANCH=v3.3.2
 
 RUN git fetch origin ${BRANCH} && \
     git checkout ${BRANCH} && \
@@ -88,13 +88,18 @@ RUN export ESPIDF_SUPHASH_V3=$(cat ${WORK_DIR}/espdif_suphash_v3) && \
     cd esp-idf && \
     git fetch origin ${ESPIDF_SUPHASH_V3} && \
     git checkout ${ESPIDF_SUPHASH_V3} && \
-    git submodule update --init
+    git submodule update --init && \
+    cd components/mbedtls/ && \
+    rm -rf mbedtls && \
+    git clone -b mbedtls-2.16.5-idf-pycopy https://github.com/pfalcon/mbedtls/
+
+    # (cd esp-idf/components/mbedtls/mbedtls; git log -n1)
 
 # COMPILE FIRMWARE
 
 WORKDIR ${WORK_DIR}/micropython/ports/esp32
 
-RUN git checkout v3.1.5
+RUN git checkout ${BRANCH}
 
 # Set double precision floats if set
 ARG DOUBLE_PRECISION_FLOATS=false
